@@ -11,4 +11,17 @@ defmodule ElixirGql.UserResolver do
       user -> {:ok, user}
     end
   end
+
+  def update(%{id: id, user: user_params}, _info) do
+    Repo.get!(User, id)
+    |> User.update_changeset(user_params)
+    |> Repo.update
+  end
+
+  def login(params, _info) do
+    with {:ok, user} <- ElixirGql.Session.authenticate(params, Repo),
+         {:ok, jwt, _} <- Guardian.encode_and_sign(user, :access) do
+      {:ok, %{token: jwt}}
+    end
+  end
 end

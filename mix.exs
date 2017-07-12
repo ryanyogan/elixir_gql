@@ -20,7 +20,7 @@ defmodule ElixirGql.Mixfile do
     [mod: {ElixirGql, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :absinthe, :absinthe_plug, :absinthe_ecto,
-                    :poison, :faker]]
+                    :poison, :faker, :comeonin, :guardian]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,6 +43,8 @@ defmodule ElixirGql.Mixfile do
      {:absinthe_ecto, git: "https://github.com/absinthe-graphql/absinthe_ecto.git"},
      {:poison, "~> 2.0"},
      {:faker, "~> 0.7"},
+     {:comeonin, "~> 3.2"},
+     {:guardian, "~> 0.14"},
      {:cowboy, "~> 1.0"}]
   end
 

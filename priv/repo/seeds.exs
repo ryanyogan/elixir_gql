@@ -12,8 +12,8 @@
 
 alias ElixirGql.{User, Post, Repo}
 
-Repo.insert!(%User{name: "Ryan Yogan", email: "ryanyogan@gmail.com"})
-Repo.insert!(%User{name: "Weird Al", email: "al@aim.url"})
+Repo.insert!(%User{name: "Ryan Yogan", email: "ryanyogan@gmail.com", password: "foobar"})
+Repo.insert!(%User{name: "Weird Al", email: "al@aim.url", password: "foobar"})
 
 for _ <- 1..10 do
   Repo.insert!(%Post{

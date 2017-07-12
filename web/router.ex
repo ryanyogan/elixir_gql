@@ -9,8 +9,10 @@ defmodule ElixirGql.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  pipeline :graphql do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug ElixirGql.Web.Context
   end
 
   scope "/", ElixirGql do
@@ -19,14 +21,13 @@ defmodule ElixirGql.Router do
     get "/", PageController, :index
   end
 
-  forward "/api", Absinthe.Plug,
-    schema: ElixirGql.Schema
+  scope "/api" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug,
+      schema: ElixirGql.Schema
+  end
 
   forward "/graphiql", Absinthe.Plug.GraphiQL,
     schema: ElixirGql.Schema
-
-  # Other scopes may use custom stacks.
-  # scope "/api", ElixirGql do
-  #   pipe_through :api
-  # end
 end
